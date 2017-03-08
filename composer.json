@@ -1,4 +1,5 @@
 {
+    "name": "warpcode/std",
     "autoload": {
         "psr-4": {
             "Waprcode\\Std\\": "src/"
