@@ -92,7 +92,7 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($arr->slice(5, 1)->toArray(), [5]);
         $this->assertEquals($arr->slice(4, 2)->toArray(), [4,5]);
-        $this->assertEquals($arr2->slice(3, 1.1)->toArray(), ['test4' => 'test4']);
+        $this->assertEquals($arr2->slice(3, 1)->toArray(), ['test4' => 'test4']);
         $this->assertEquals($arr2->slice(3, 2)->toArray(), ['test4' => 'test4', 'test5' => 'test5']);
     }
 }
