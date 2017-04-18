@@ -67,4 +67,32 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
         //test countable implementation
         $this->assertEquals(count($array), count($arr));
     }
+
+    /**
+     * Test the slice function with no length parameter set
+     */
+    public function testSliceNoLength(){
+        $arr = new Arr(range(0,9));
+
+        $array = ['test1', 'test2', 'test3', 'test4', 'test5'];
+        $arr2 = new Arr(array_combine($array, $array));
+
+        $this->assertEquals($arr->slice(5)->toArray(), range(5,9));
+        $this->assertEquals($arr2->slice(3)->toArray(), ['test4' => 'test4', 'test5' => 'test5']);
+    }
+
+    /**
+     * Test the slice function with a length parameter
+     */
+    public function testSliceWithLength(){
+        $arr = new Arr(range(0,9));
+
+        $array = ['test1', 'test2', 'test3', 'test4', 'test5'];
+        $arr2 = new Arr(array_combine($array, $array));
+
+        $this->assertEquals($arr->slice(5, 1)->toArray(), [5]);
+        $this->assertEquals($arr->slice(4, 2)->toArray(), [4,5]);
+        $this->assertEquals($arr2->slice(3, 1.1)->toArray(), ['test4' => 'test4']);
+        $this->assertEquals($arr2->slice(3, 2)->toArray(), ['test4' => 'test4', 'test5' => 'test5']);
+    }
 }
