@@ -15,6 +15,7 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
      * Constructor.
      *
      * @param array $array Content of the array
+     * @throws \InvalidArgumentException
      */
     public function __construct($array = []){
         if(is_array($array)){
