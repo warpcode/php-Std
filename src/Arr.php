@@ -73,6 +73,14 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Alias of count()
+     * @return int
+     */
+    public function length(){
+        return $this->count();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function count(){

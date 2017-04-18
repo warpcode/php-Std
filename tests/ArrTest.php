@@ -64,6 +64,9 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
         //test direct call to count
         $this->assertEquals(count($array), $arr->count());
 
+        //test call to length
+        $this->assertEquals(count($array), $arr->length());
+
         //test countable implementation
         $this->assertEquals(count($array), count($arr));
     }
