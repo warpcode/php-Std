@@ -218,7 +218,7 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
             throw new \InvalidArgumentException('Length must be an integer or NULL');
         }
 
-        return new self(array_slice($this->store, $index, $length));
+        return new static(array_slice($this->store, (int)$index, $length === null? null: (int)$length, $preserve_keys));
     }
 
 
