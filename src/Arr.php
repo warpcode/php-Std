@@ -30,6 +30,14 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Whether the array is empty
+     * @return boolean
+     */
+    public function isEmpty(){
+        return empty($this->store);
+    }
+
+    /**
      * Slices the array into a smaller specified section
      * @param  int $index  Index position to start the slice
      * @param  int $length How many items in the array to retrieve from the specified index
