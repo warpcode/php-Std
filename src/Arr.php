@@ -131,6 +131,11 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return new static(array_keys($this->store));
     }
 
+    public function getValues(){
+        return new static(array_values($this->store));
+    }
+
+
     /**
      * Slices the array into a smaller specified section
      * @param  int $index  Index position to start the slice
