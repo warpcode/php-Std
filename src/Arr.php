@@ -118,6 +118,16 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Checks whether the value exists within the array
+     * @param  mixed   $value   Value to search for
+     * @param  boolean $strict  Whether to check for the type of the value
+     * @return boolean
+     */
+    public function hasValue($value, $strict = false){
+        return in_array($value, $this->store, $strict);
+    }
+
+    /**
      * Slices the array into a smaller specified section
      * @param  int $index  Index position to start the slice
      * @param  int $length How many items in the array to retrieve from the specified index
