@@ -154,7 +154,25 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
 
+
     /**
+     * Chunks the array into multiple arrays with the amount specified in each array
+     * @param  int  $length           Number of elements in each array
+     * @param  boolean $preserve_keys Preserve original keys of the array
+     * @return static                 Returns a new instance of the class with the specified elements
+     */
+    public function chunk($length, $preserve_keys = false){
+        if( !ctype_digit((string)$length) || $length < 1){
+            throw new \InvalidArgumentException('Length must be an integer that is greater than 0');
+        }
+
+        if($this->isEmpty()){
+            return null;
+        }
+
+        return array_chunk($this->store, $length, $preserve_keys);
+    }
+
      * Slices the array into a smaller specified section
      * @param  int $index  Index position to start the slice
      * @param  int $length How many items in the array to retrieve from the specified index
