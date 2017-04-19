@@ -173,6 +173,36 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return array_chunk($this->store, $length, $preserve_keys);
     }
 
+    /**
+     * Chunks the array by distributing the number of elements as equally as possible into the number of "columns" specified
+     * @param  int     $column_count  Number of columns to split the array into
+     * @param  boolean $preserve_keys Preserve original keys of the array
+     * @return static                 Returns a new instance of the class with the specified elements
+     */
+    public function chunkColumns($column_count, $preserve_keys = false){
+        if( !ctype_digit((string)$column_count) || $column_count < 1){
+            throw new \InvalidArgumentException('Column count must be an integer that is greater than 0');
+        }
+
+        if($this->isEmpty()){
+            return null;
+        }
+
+        $elements_per_col = ceil($this->count()/ $column_count);
+
+        $chunked = $this->chunk($elements_per_col, $preserve_keys);
+        $chunked_count = count($chunked);
+        if($chunked_count != $column_count){
+            //Ensure the correct number of columns are in the array
+            $chunk_diff = $column_count - $chunked_count;
+            for($i = 0; $i < $chunk_diff; ++$i){
+                $chunked[] = [];
+            }
+        }
+        return $chunked;
+    }
+
+    /**
      * Slices the array into a smaller specified section
      * @param  int $index  Index position to start the slice
      * @param  int $length How many items in the array to retrieve from the specified index
