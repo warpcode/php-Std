@@ -222,6 +222,23 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return new static(array_slice($this->store, (int)$index, $length === null? null: (int)$length, $preserve_keys));
     }
 
+    /**
+     * Returns the first element of the array with a key
+     * @param  boolean $preserve_key Whether to preserve the elements original key
+     * @return static                  Returns a new instance of the class with the specified elements
+     */
+    public function sliceFirst($preserve_key = false){
+        return $this->slice(0, 1, $preserve_keys);
+    }
+
+    /**
+     * Returns the last element of the array with a key
+     * @param  boolean $preserve_key Whether to preserve the elements original key
+     * @return static                  Returns a new instance of the class with the specified elements
+     */
+    public function sliceLast($preserve_key = false){
+        return $this->slice(-1, 1, $preserve_keys);
+    }
 
     /**
      * Return the internal array
