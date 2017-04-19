@@ -204,9 +204,10 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
 
     /**
      * Slices the array into a smaller specified section
-     * @param  int $index  Index position to start the slice
-     * @param  int $length How many items in the array to retrieve from the specified index
-     * @return self        Returns a new instance of the class with the specified elements
+     * @param  int $index               Index position to start the slice
+     * @param  int $length              How many items in the array to retrieve from the specified index
+     * @param  boolean $preserve_keys   Whether to preserve the array keys
+     * @return static                   Returns a new instance of the class with the specified elements
      * @throws \InvalidArgumentException
      */
     public function slice($index, $length = null, $preserve_keys = false){
