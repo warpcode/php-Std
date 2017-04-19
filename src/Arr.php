@@ -250,6 +250,38 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Converts the array to a CSV formatted string
+     * @return string
+     */
+    public function toCSV(){
+
+    }
+
+    /**
+     * Forces a json object to preserve keys
+     * @return string Json formatted string
+     */
+    public function toJsonObject(){
+
+    }
+
+    /**
+     * Forces a json array which doesn't preserve keys.
+     * @return string Json formatted string
+     */
+    public function toJsonArray(){
+
+    }
+
+    /**
+     * Output an XML formatted string
+     * @return string XML in a string
+     */
+    public function toXML(){
+
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function serialize() {
