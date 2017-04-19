@@ -209,9 +209,9 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
      * @return self        Returns a new instance of the class with the specified elements
      * @throws \InvalidArgumentException
      */
-    public function slice($index, $length = NULL){
-        if(!ctype_digit((string)$index)){
-            throw new \InvalidArgumentException('Index must be an integer');
+    public function slice($index, $length = null, $preserve_keys = false){
+        if(!$this->hasIndex($index)){
+            return null;
         }
 
         if($length !== NULL && !ctype_digit((string)$length)){
