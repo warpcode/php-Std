@@ -127,6 +127,16 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return in_array($value, $this->store, $strict);
     }
 
+    public function getIndexes(){
+        $count = $this->count();
+
+        if($count < 1){
+            return new static();
+        }
+
+        return new static(range(0, $this->count() - 1));
+    }
+
     public function getKeys(){
         return new static(array_keys($this->store));
     }
