@@ -215,7 +215,7 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         }
 
         if($length !== NULL && !ctype_digit((string)$length)){
-            throw new \InvalidArgumentException('Length must be an integer or NULL');
+            throw new \InvalidArgumentException('Length must be an positive integer or NULL');
         }
 
         return new static(array_slice($this->store, (int)$index, $length === null? null: (int)$length, $preserve_keys));
