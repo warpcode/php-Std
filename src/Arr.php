@@ -90,6 +90,25 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Checks whether an index exists within the array
+     * @param  int     $index Index value to check
+     * @return boolean
+     */
+    public function hasIndex($index){
+        if(!is_numeric($index)){
+            throw new \InvalidArgumentException('Index must be numeric');
+        }
+
+        $array_count = $this->count() - 1;
+
+        if($array_count < 0){
+            return false;
+        }
+
+        return $array_count - abs((int)$index) >= 0;
+    }
+
+    /**
      * Slices the array into a smaller specified section
      * @param  int $index  Index position to start the slice
      * @param  int $length How many items in the array to retrieve from the specified index

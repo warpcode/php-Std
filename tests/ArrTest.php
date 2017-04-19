@@ -54,6 +54,19 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
         new Arr('teststring');
     }
 
+    public function testHasIndex(){
+        $arr = new Arr($this->numeric_a);
+
+        for($i=0; $i < count($this->numeric_a); ++$i){
+            $this->assertTrue($arr->hasIndex($i));
+        }
+
+        for($i=0; $i > -count($this->numeric_a); --$i){
+            $this->assertTrue($arr->hasIndex($i));
+        }
+
+    }
+
     /**
     * Test to make sure that when we pass an array, it remains an array
     */
