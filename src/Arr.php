@@ -38,6 +38,23 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Checks to see if the internal array is multidimensional
+     * @return boolean
+     */
+    public function isMultiDimensional(){
+        $is_multidim = false;
+        foreach($this->store as &$value){
+            if(is_array($value)){
+                $is_multidim = true;
+                break;
+            }
+        }
+        unset($value);
+
+        return $is_multidim;
+    }
+
+    /**
      * Slices the array into a smaller specified section
      * @param  int $index  Index position to start the slice
      * @param  int $length How many items in the array to retrieve from the specified index
