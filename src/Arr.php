@@ -212,7 +212,7 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
      */
     public function slice($index, $length = null, $preserve_keys = false){
         if(!$this->hasIndex($index)){
-            return null;
+            return new static();
         }
 
         if($length !== NULL && !ctype_digit((string)$length)){
