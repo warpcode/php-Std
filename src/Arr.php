@@ -127,6 +127,11 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return in_array($value, $this->store, $strict);
     }
 
+    /**
+     * Retrieve a value from the array by it's index number
+     * @param  int    $index Index to retrieve value
+     * @return mixed
+     */
     public function getByIndex($index){
         return current($this->slice($index, 1)->toArray());
     }
@@ -135,6 +140,10 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return $this->hasKey($key)? $this->store[$key]: null;
     }
 
+    /**
+     * Returns a list of valid index numbers
+     * @return static
+     */
     public function getIndexes(){
         $count = $this->count();
 
@@ -145,10 +154,18 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return new static(range(0, $this->count() - 1));
     }
 
+    /**
+     * Retrieves a list of keys from the array
+     * @return static
+     */
     public function getKeys(){
         return new static(array_keys($this->store));
     }
 
+    /**
+     * Retrieves all the values from the array
+     * @return static
+     */
     public function getValues(){
         return new static(array_values($this->store));
     }
