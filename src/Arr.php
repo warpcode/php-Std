@@ -73,6 +73,20 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Returns a list of valid index numbers
+     * @return static
+     */
+    public function getIndexes(){
+        $count = $this->count();
+
+        if($count < 1){
+            return $this->createArray();
+        }
+
+        return $this->createArray(range(0, $this->count() - 1));
+    }
+
+    /**
      * Checks wither the array has integer keys
      * @param  boolean $sequential_keys Make sure the keys are sequenctional
      * @return boolean
@@ -127,25 +141,6 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
-     * Checks whether the specified key exists
-     * @param  mixed  $key  Key value
-     * @return boolean
-     */
-    public function hasKey($key){
-        return array_key_exists($key, $this->store);
-    }
-
-    /**
-     * Checks whether the value exists within the array
-     * @param  mixed   $value   Value to search for
-     * @param  boolean $strict  Whether to check for the type of the value
-     * @return boolean
-     */
-    public function hasValue($value, $strict = false){
-        return in_array($value, $this->store, $strict);
-    }
-
-    /**
      * Retrieve a value from the array by it's index number
      * @param  int    $index Index to retrieve value
      * @return mixed
@@ -155,26 +150,13 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
-     * Retrieve a value from the array by it's key
-     * @param  mixed $key  The keyfor the value in the array
-     * @return mixed       The value corresponding to the key provided
+     * Performs an array search for a given value and returns the first corresponding index if successfull
+     * @param  mixed  $value   Value to search for
+     * @param  boolean $strict Whether to enable strict type comparison
+     * @return mixed
      */
-    public function getByKey($key){
-        return $this->hasKey($key)? $this->store[$key]: null;
-    }
-
-    /**
-     * Returns a list of valid index numbers
-     * @return static
-     */
-    public function getIndexes(){
-        $count = $this->count();
-
-        if($count < 1){
-            return $this->createArray();
-        }
-
-        return $this->createArray(range(0, $this->count() - 1));
+    public function getIndexFromValue($value, $strict = false){
+        return $this->getValues()->getKeyFromValue($value, $strict);
     }
 
     /**
@@ -183,6 +165,24 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
      */
     public function getKeys(){
         return new static(array_keys($this->store));
+    }
+
+    /**
+     * Checks whether the specified key exists
+     * @param  mixed  $key  Key value
+     * @return boolean
+     */
+    public function hasKey($key){
+        return array_key_exists($key, $this->store);
+    }
+
+    /**
+     * Retrieve a value from the array by it's key
+     * @param  mixed $key  The keyfor the value in the array
+     * @return mixed       The value corresponding to the key provided
+     */
+    public function getByKey($key){
+        return $this->hasKey($key)? $this->store[$key]: null;
     }
 
     /**
@@ -203,21 +203,21 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
-     * Performs an array search for a given value and returns the first corresponding index if successfull
-     * @param  mixed  $value   Value to search for
-     * @param  boolean $strict Whether to enable strict type comparison
-     * @return mixed
-     */
-    public function getIndexFromValue($value, $strict = false){
-        return $this->getValues()->getKeyFromValue($value, $strict);
-    }
-
-    /**
      * Retrieves all the values from the array
      * @return static
      */
     public function getValues(){
         return $this->createArray(array_values($this->store));
+    }
+
+    /**
+     * Checks whether the value exists within the array
+     * @param  mixed   $value   Value to search for
+     * @param  boolean $strict  Whether to check for the type of the value
+     * @return boolean
+     */
+    public function hasValue($value, $strict = false){
+        return in_array($value, $this->store, $strict);
     }
 
 
