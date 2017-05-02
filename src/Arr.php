@@ -145,6 +145,11 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return current($this->slice($index, 1)->toArray());
     }
 
+    /**
+     * Retrieve a value from the array by it's key
+     * @param  mixed $key  The keyfor the value in the array
+     * @return mixed       The value corresponding to the key provided
+     */
     public function getByKey($key){
         return $this->hasKey($key)? $this->store[$key]: null;
     }
