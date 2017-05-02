@@ -27,6 +27,8 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
     public function testConstruct(){
         new Arr();
         $this->assertTrue(true);
+
+        $this->assertEquals(Arr::factory(), new Arr());
     }
 
     /**
@@ -35,6 +37,8 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
     public function testConstructWithArray(){
         new Arr($this->numeric_a);
         $this->assertTrue(true);
+
+        $this->assertEquals(Arr::factory($this->numeric_a), new Arr($this->numeric_a));
     }
 
     /**
@@ -44,6 +48,8 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
         $obj = new Arr($this->numeric_a);
         new Arr($obj);
         $this->assertTrue(true);
+
+        $this->assertEquals(Arr::factory(new Arr($this->numeric_a)), new Arr(new Arr($this->numeric_a)));
     }
 
     /**

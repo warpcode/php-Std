@@ -30,6 +30,15 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Static method for creating a new instance of the class
+     * @param  array $array Content of the array
+     * @return static
+     */
+    public static function factory($array = []){
+        return new static($array);
+    }
+
+    /**
      * Whether the array is empty
      * @return boolean
      */
