@@ -186,6 +186,33 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Performs an array search for a given value and returns the first corresponding key if successfull
+     * @param  mixed  $value   Value to search for
+     * @param  boolean $strict Whether to enable strict type comparison
+     * @return mixed
+     */
+    public function getKeyFromValue($value, $strict = false){
+        $search = array_search($value, $this->store, $strict);
+
+        if($search === null || $search === false){
+            return false;
+        }
+        else{
+            return $search;
+        }
+    }
+
+    /**
+     * Performs an array search for a given value and returns the first corresponding index if successfull
+     * @param  mixed  $value   Value to search for
+     * @param  boolean $strict Whether to enable strict type comparison
+     * @return mixed
+     */
+    public function getIndexFromValue($value, $strict = false){
+        return $this->getValues()->getKeyFromValue($value, $strict);
+    }
+
+    /**
      * Retrieves all the values from the array
      * @return static
      */
