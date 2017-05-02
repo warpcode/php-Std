@@ -60,6 +60,28 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
         new Arr('teststring');
     }
 
+    /**
+     * Various tests to make sure isIndexed successfull checks for indexed arrays
+     * @return [type] [description]
+     */
+    public function testIsIndexed(){
+        $this->assertTrue(Arr::factory([])->isIndexed());
+
+        $this->assertTrue(Arr::factory($this->numeric_a)->isIndexed());
+
+        $this->assertFalse(Arr::factory($this->assoc_a)->isIndexed());
+
+        $this->assertFalse(Arr::factory([-1 => 'test1', 0 => 'test2'])->isIndexed());
+
+        $this->assertFalse(Arr::factory([0 => 'test1', 2 => 'test2'])->isIndexed());
+
+        $this->assertTrue(Arr::factory([0 => 'test1', 2 => 'test2'])->isIndexed(false));
+    }
+
+
+    /**
+     * Test whether an index exists
+     */
     public function testHasIndex(){
         $arr = new Arr($this->numeric_a);
 

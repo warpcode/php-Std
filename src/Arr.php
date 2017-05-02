@@ -85,7 +85,7 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
                 $is_index = false;
                 break;
             }
-            elseif($sequential_keys && ($previous_index + 1) !== $key){
+            elseif($sequential_keys && $previous_index !== null && ($previous_index + 1) !== $key){
                 // current key is not +1 of previous index and therefor breaks sequence
                 $is_index = false;
                 break;
