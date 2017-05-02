@@ -39,6 +39,15 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Internal factory method for creating a new instance for an array
+     * @param  array $array Content of the array
+     * @return static
+     */
+    protected function createArray($array = []){
+        return new static($array);
+    }
+
+    /**
      * Whether the array is empty
      * @return boolean
      */
@@ -162,10 +171,10 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         $count = $this->count();
 
         if($count < 1){
-            return new static();
+            return $this->createArray();
         }
 
-        return new static(range(0, $this->count() - 1));
+        return $this->createArray(range(0, $this->count() - 1));
     }
 
     /**
@@ -181,7 +190,7 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
      * @return static
      */
     public function getValues(){
-        return new static(array_values($this->store));
+        return $this->createArray(array_values($this->store));
     }
 
 
@@ -243,14 +252,14 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
      */
     public function slice($index, $length = null, $preserve_keys = false){
         if(!$this->hasIndex($index)){
-            return new static();
+            return $this->createArray();
         }
 
         if($length !== NULL && !ctype_digit((string)$length)){
             throw new \InvalidArgumentException('Length must be an positive integer or NULL');
         }
 
-        return new static(array_slice($this->store, (int)$index, $length === null? null: (int)$length, $preserve_keys));
+        return $this->createArray(array_slice($this->store, (int)$index, $length === null? null: (int)$length, $preserve_keys));
     }
 
     /**
