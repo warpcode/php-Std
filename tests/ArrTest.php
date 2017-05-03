@@ -61,6 +61,34 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Tests the is empty method
+     */
+    public function testIsEmpty(){
+        $this->assertTrue(Arr::factory([])->isEmpty());
+
+        $this->assertFalse(Arr::factory([null])->isEmpty());
+
+        $this->assertFalse(Arr::factory($this->numeric_a)->isEmpty());
+
+        $this->assertFalse(Arr::factory($this->assoc_a)->isEmpty());
+    }
+
+    /**
+     * Tests various arrays to check if they are scalar
+     */
+    public function testIsMultiDimensional(){
+        $this->assertFalse(Arr::factory([])->isMultiDimensional());
+
+        $this->assertFalse(Arr::factory($this->numeric_a)->isMultiDimensional());
+
+        $this->assertFalse(Arr::factory($this->assoc_a)->isMultiDimensional());
+
+        $this->assertFalse(Arr::factory([-1 => 'test1', 0 => new Arr()])->isMultiDimensional());
+
+        $this->assertTrue(Arr::factory([1 => 'test1', 0 => []])->isMultiDimensional());
+    }
+
+    /**
      * Tests various arrays to check if they are scalar
      */
     public function testIsScalar(){
@@ -81,7 +109,6 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
 
     /**
      * Various tests to make sure isIndexed successfull checks for indexed arrays
-     * @return [type] [description]
      */
     public function testIsIndexed(){
         $this->assertTrue(Arr::factory([])->isIndexed());
