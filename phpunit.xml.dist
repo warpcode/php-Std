@@ -18,6 +18,9 @@
     <logging>
         <log type="coverage-html" target="./tests/codeCoverage" charset="UTF-8"/>
     </logging>
+    <listeners>
+        <listener file="./tests/PhpUnit/Listeners/TestTimesListener.php" class="\Warpcode\test\PhpUnit\Listeners\PHPUnitTestListener"/>
+    </listeners>
     <filter>
       <whitelist processUncoveredFilesFromWhitelist="true">
         <directory suffix=".php">./src</directory>
