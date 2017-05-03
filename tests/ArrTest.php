@@ -108,6 +108,20 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Tests to make sure the correct index array is returned
+     */
+    public function testGetIndexesWithAssocArray(){
+        $this->assertEquals(Arr::factory($this->assoc_a)->getIndexes()->toArray(), range(0, count($this->assoc_a) - 1));
+    }
+
+    /**
+     * Tests to make sure the correct index array is returned
+     */
+    public function testGetIndexesWithEmptyArray(){
+        $this->assertEquals(Arr::factory([])->getIndexes()->toArray(), []);
+    }
+
+    /**
      * Various tests to make sure isIndexed successfull checks for indexed arrays
      */
     public function testIsIndexed(){
