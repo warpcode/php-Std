@@ -1,3 +1,4 @@
 vendor/
+tests/codeCoverage/
 composer.lock
 .DS_Store

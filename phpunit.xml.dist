@@ -15,6 +15,9 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <logging>
+        <log type="coverage-html" target="./tests/codeCoverage" charset="UTF-8"/>
+    </logging>
     <filter>
       <whitelist processUncoveredFilesFromWhitelist="true">
         <directory suffix=".php">./src</directory>
