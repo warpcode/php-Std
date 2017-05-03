@@ -197,4 +197,41 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
         $this->assertEquals($arr2->slice(3, 1)->toArray(), ['test4' => 'test4']);
         $this->assertEquals($arr2->slice(3, 2)->toArray(), ['test4' => 'test4', 'test5' => 'test5']);
     }
+
+    /**
+     * Force and invalid numeric length parameter
+     * @expectedException \InvalidArgumentException
+     */
+    public function testChunkWithInvalidLengthBelow0(){
+        Arr::Factory($this->numeric_a)->chunk(-1);
+    }
+
+    /**
+     * Force and invalid numeric length parameter
+     * @expectedException \InvalidArgumentException
+     */
+    public function testChunkWithInvalidLengthString(){
+        Arr::Factory($this->numeric_a)->chunk('Not a number');
+    }
+
+    /**
+     * Force and invalid numeric length parameter
+     */
+    public function testChunkWithEmptyArray(){
+        $this->assertEquals(Arr::Factory([])->chunk(5), null);
+    }
+
+    /**
+     * Force and invalid numeric length parameter
+     */
+    public function testChunk(){
+        $this->assertEquals(Arr::Factory($this->numeric_a)->chunk(2), array_chunk($this->numeric_a, 2));
+    }
+
+    /**
+     * Force and invalid numeric length parameter
+     */
+    public function testChunkWithPreserveKeys(){
+        $this->assertEquals(Arr::Factory($this->numeric_a)->chunk(2, true), array_chunk($this->numeric_a, 2, true));
+    }
 }
