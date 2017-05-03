@@ -157,22 +157,6 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
-    * Test the count function of the array class
-    */
-    public function testCount(){
-        $arr = new Arr($this->numeric_a);
-
-        //test direct call to count
-        $this->assertEquals(count($this->numeric_a), $arr->count());
-
-        //test call to length
-        $this->assertEquals(count($this->numeric_a), $arr->length());
-
-        //test countable implementation
-        $this->assertEquals(count($this->numeric_a), count($arr));
-    }
-
-    /**
      * Test the slice function with no length parameter set
      */
     public function testSliceNoLength(){
@@ -233,5 +217,33 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
      */
     public function testChunkWithPreserveKeys(){
         $this->assertEquals(Arr::Factory($this->numeric_a)->chunk(2, true), array_chunk($this->numeric_a, 2, true));
+    }
+
+    /**
+    * Test the count function of the array class
+    */
+    public function testCount(){
+        $this->assertEquals(count($this->numeric_a), Arr::factory($this->numeric_a)->count());
+    }
+
+    /**
+    * Test the length function of the array class
+    */
+    public function testLength(){
+        $this->assertEquals(count($this->numeric_a), Arr::factory($this->numeric_a)->length());
+    }
+
+    /**
+    * Test the sizeof function of the array class
+    */
+    public function testSizeOf(){
+        $this->assertEquals(count($this->numeric_a), Arr::factory($this->numeric_a)->sizeOf());
+    }
+
+    /**
+    * Test the countable interface of the array class
+    */
+    public function testCountableInterface(){
+        $this->assertEquals(count($this->numeric_a), count(Arr::factory($this->numeric_a)));
     }
 }
