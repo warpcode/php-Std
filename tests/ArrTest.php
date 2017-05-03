@@ -61,6 +61,25 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Tests various arrays to check if they are scalar
+     */
+    public function testIsScalar(){
+        $this->assertTrue(Arr::factory([])->isScalar());
+
+        $this->assertTrue(Arr::factory($this->numeric_a)->isScalar());
+
+        $this->assertTrue(Arr::factory($this->assoc_a)->isScalar());
+
+        $this->assertFalse(Arr::factory([-1 => 'test1', 0 => new Arr()])->isScalar());
+
+        $this->assertFalse(Arr::factory([1 => 'test1', 0 => new Arr()])->isScalar());
+
+        $this->assertTrue(Arr::factory([0 => 'test1', 2 => 'test2', 3 => null])->isScalar());
+
+        $this->assertFalse(Arr::factory([0 => 'test1', 2 => 'test2', 3 => null])->isScalar(false));
+    }
+
+    /**
      * Various tests to make sure isIndexed successfull checks for indexed arrays
      * @return [type] [description]
      */

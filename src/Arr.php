@@ -73,6 +73,32 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
     }
 
     /**
+     * Checks whether the array contains only scalar values
+     * @param  boolean $allow_null Includes null as a valid avlue in the check
+     * @return boolean
+     */
+    public function isScalar($allow_null = true){
+        $is_scalar = true;
+        foreach($this->store as &$value){
+            if(!is_scalar($value)){
+                if($allow_null){
+                    if($value !== null){
+                        $is_scalar = false;
+                        break;
+                    }
+                }
+                else{
+                    $is_scalar = false;
+                    break;
+                }
+            }
+        }
+        unset($value);
+
+        return $is_scalar;
+    }
+
+    /**
      * Returns a list of valid index numbers
      * @return static
      */
