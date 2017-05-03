@@ -140,11 +140,32 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
         $this->assertTrue(Arr::factory([0 => 'test1', 2 => 'test2'])->isIndexed(false));
     }
 
+    /**
+     * Test whether an index exists
+     * @expectedException \InvalidArgumentException
+     */
+    public function testHasIndexWithNoneNumericIndex(){
+        Arr::factory($this->numeric_a)->hasIndex('test_string');
+    }
 
     /**
      * Test whether an index exists
      */
-    public function testHasIndex(){
+    public function testHasIndexWithEmptyArray(){
+        $this->assertFalse(Arr::factory([])->hasIndex(0));
+    }
+
+    /**
+     * Test whether an index exists
+     */
+    public function testHasIndexWithNoneExistantIndex(){
+        $this->assertFalse(Arr::factory($this->numeric_a)->hasIndex(count($this->numeric_a)));
+    }
+
+    /**
+     * Test whether an index exists
+     */
+    public function testHasIndexWithValidIndexes(){
         $arr = new Arr($this->numeric_a);
 
         for($i=0; $i < count($this->numeric_a); ++$i){
