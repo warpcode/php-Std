@@ -73,6 +73,8 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
 
         $this->assertFalse(Arr::factory([-1 => 'test1', 0 => 'test2'])->isIndexed());
 
+        $this->assertFalse(Arr::factory([1 => 'test1', 0 => 'test2'])->isIndexed());
+
         $this->assertFalse(Arr::factory([0 => 'test1', 2 => 'test2'])->isIndexed());
 
         $this->assertTrue(Arr::factory([0 => 'test1', 2 => 'test2'])->isIndexed(false));
