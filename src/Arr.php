@@ -374,6 +374,75 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
 
     }
 
+    public function toQueryString($seperator = NULL, $escape_square_brackets = false, $rfc = PHP_QUERY_RFC3986){
+
+        if($rfc !== PHP_QUERY_RFC3986 && $rfc !== PHP_QUERY_RFC1738){
+            $rfc = PHP_QUERY_RFC3986;
+        }
+
+        if($seperator === null){
+            $seperator = ini_get('arg_separator.output');
+        }
+
+        if($escape_square_brackets || !$this->isMultiDimensional()){
+            return http_build_query($this->store, null, $seperator, $rfc);
+        }
+        else{
+            return $this->toQueryStringProcessArray($this->store, $seperator, $rfc, '');
+        }
+    }
+
+    protected function toQueryStringProcessArray($array, $sep, $rfc, $key){
+        $ret = array();
+        //if it's not an array or object, then it's not iterable (has no keys) so just return it
+        if (!is_array($array) && !is_object($array))
+            return ($rfc === PHP_QUERY_RFC3986? rawurlencode($array): urlencode($array));
+
+        foreach ($array as $k => $v) {
+            //if the key is not empty, it implies it's been called recursively so set up the query string array key
+            if ((!empty($key)) || ($key === 0))
+                $k = $key . '[' . ($rfc === PHP_QUERY_RFC3986? rawurlencode($k): urlencode($k)) . ']';
+
+            //now we work on the value
+            if (is_array($v)) {
+                //just recusively call this function, eventually we'll get all the multidimensional array elements
+                //unless some idiot does recursive references, at which point the loop will be infinite
+                array_push($ret, $this->toQueryStringProcessArray($v, $sep, $rfc, $k));
+            } elseif (is_object($v)) {
+                //handle objects differently. First see if it has the toQueryString method
+                if (method_exists($v, 'toQueryString')) {
+                    $refl = new ReflectionMethod($v, 'toQueryString');
+
+                    //the method is valid, so run it
+                    if ($refl->isPublic() && !$refl->isStatic()) {
+                        $obj_str = $v->toQueryString('', $sep, $k);
+                    } else {
+                        //it's not valid so we need to iterate the object
+                        $obj_str = $v;
+                    }
+                } else {
+                    //the method doesn't exist so we need to iterate through it
+                    $obj_str = $v;
+                }
+
+                //it seems it has returned an array or the method wasn't found, so let's iterate through it
+                if (is_array($obj_str) || is_object($obj_str)) {
+                    array_push($ret, $this->toQueryStringProcessArray($obj_str, $sep, $rf, $k));
+                } else {
+
+                    //we had a return value that wasn't an array
+                    //as the return is from toQueryString which calls this class (everything else is considered an array), we will trust it
+                    array_push($ret, $k . '=' . $obj_str);
+                }
+            } else {
+                array_push($ret, $k . '=' . ($rfc === PHP_QUERY_RFC3986? rawurlencode($v): urlencode($v)));
+            }
+        }
+
+        //set the seperator and implode to create the final string
+        return implode($sep, $ret);
+    }
+
     /**
      * Output an XML formatted string
      * @return string XML in a string
