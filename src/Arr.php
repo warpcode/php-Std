@@ -175,6 +175,14 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return current($this->slice($index, 1)->toArray());
     }
 
+    public function first(){
+        return $this->getByIndex(0);
+    }
+
+    public function last(){
+        return $this->getByIndex($this->count() - 1);
+    }
+
     /**
      * Performs an array search for a given value and returns the first corresponding index if successfull
      * @param  mixed  $value   Value to search for
