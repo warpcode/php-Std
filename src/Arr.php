@@ -175,10 +175,18 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
         return current($this->slice($index, 1)->toArray());
     }
 
+    /**
+     * Retrieve the first value in the array
+     * @return mixed
+     */
     public function first(){
         return $this->getByIndex(0);
     }
 
+    /**
+     * Retrieve the last value in the array
+     * @return mixed
+     */
     public function last(){
         return $this->getByIndex($this->count() - 1);
     }
