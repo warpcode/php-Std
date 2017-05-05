@@ -2,7 +2,7 @@
 
 namespace Warpcode\Std;
 
-class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \Countable{
+class Arr implements \ArrayAccess, \Iterator, \Serializable , \Countable{
 
     /**
      * Storage variable for the provided array
@@ -494,5 +494,68 @@ class Arr implements /*\IteratorAggregate , \ArrayAccess , */ \Serializable , \C
      */
     public function count(){
         return count($this->store);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($offset){
+        return $this->getByKey($offset);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($offset, $value){
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($offset){
+        return $this->hasKey($offset);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($offset){
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function current(){
+        return current($this->store);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next(){
+        return next($this->store);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function key(){
+        return key($this->store);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function valid(){
+        return key($this->store) !== null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rewind(){
+        return reset($this->store);
     }
 }
