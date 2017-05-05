@@ -255,6 +255,74 @@ class ArrTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test chunk columns in normal use
+     * @expectedException \InvalidArgumentException
+     */
+    public function testChunkColumnsWith0ItemArrayWithInvalidColumnsArg(){
+        Arr::factory()->chunkColumns('test');
+    }
+
+    /**
+     * Test chunk columns in normal use
+     * @expectedException \InvalidArgumentException
+     */
+    public function testChunkColumnsWith0ItemArrayWith0Columns(){
+        Arr::factory()->chunkColumns(0);
+    }
+
+    /**
+     * Test chunk columns in normal use
+     */
+    public function testChunkColumnsWith0ItemArrayTo3Columns(){
+        $this->assertEquals(Arr::factory()->chunkColumns(3), null);
+    }
+
+    /**
+     * Test chunk columns in normal use
+     */
+    public function testChunkColumnsWith9ItemArrayTo3Columns(){
+        $test_array = range(0,8);
+
+        $this->assertEquals(Arr::factory($test_array)->chunkColumns(3), [array_slice($test_array, 0, 3), array_slice($test_array, 3, 3), array_slice($test_array, 6, 3)]);
+    }
+
+    /**
+     * Test chunk columns in normal use
+     */
+    public function testChunkColumnsWith10ItemArrayTo3Columns(){
+        $test_array = range(0,9);
+
+        $this->assertEquals(Arr::factory($test_array)->chunkColumns(3), [array_slice($test_array, 0, 4), array_slice($test_array, 4, 3), array_slice($test_array, 7, 3)]);
+    }
+
+    /**
+     * Test chunk columns in normal use
+     */
+    public function testChunkColumnsWith11ItemArrayTo3Columns(){
+        $test_array = range(0,10);
+
+        $this->assertEquals(Arr::factory($test_array)->chunkColumns(3), [array_slice($test_array, 0, 4), array_slice($test_array, 4, 4), array_slice($test_array, 8, 3)]);
+    }
+
+    /**
+     * Test chunk columns in normal use
+     */
+    public function testChunkColumnsWith2ItemArrayTo10Columns(){
+        $test_array = range(0,1);
+
+        $this->assertEquals(Arr::factory($test_array)->chunkColumns(10), [array_slice($test_array, 0, 1), array_slice($test_array, 1, 1), [], [], [], [], [], [], [], []]);
+    }
+
+    /**
+     * Test chunk columns in normal use
+     */
+    public function testChunkColumnsWith11ItemArrayTo3ColumnsWithKeysPreserved(){
+        $test_array = range(0,10);
+
+        $this->assertEquals(Arr::factory($test_array)->chunkColumns(3, true), [array_slice($test_array, 0, 4, true), array_slice($test_array, 4, 4, true), array_slice($test_array, 8, 3, true)]);
+    }
+
+    /**
     * Test the count function of the array class
     */
     public function testCount(){

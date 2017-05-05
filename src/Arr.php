@@ -297,17 +297,23 @@ class Arr implements \ArrayAccess, \Iterator, \Serializable , \Countable{
             return null;
         }
 
-        $elements_per_col = ceil($this->count()/ $column_count);
+        $array_length = $this->count();
+        $elements_per_col = floor($array_length / $column_count);
+        $elements_per_col_rem = $array_length % $column_count;
 
-        $chunked = $this->chunk($elements_per_col, $preserve_keys);
-        $chunked_count = count($chunked);
-        if($chunked_count != $column_count){
-            //Ensure the correct number of columns are in the array
-            $chunk_diff = $column_count - $chunked_count;
-            for($i = 0; $i < $chunk_diff; ++$i){
-                $chunked[] = [];
+        $chunked = [];
+        $offset = 0;
+        for ($col = 0; $col < $column_count; $col++) {
+            if($offset > ($array_length -1)){
+                $chunked[$col] = [];
+            }
+            else{
+                $length = ($col < $elements_per_col_rem) ? $elements_per_col + 1 : $elements_per_col;
+                $chunked[$col] = $this->slice($offset, $length, $preserve_keys)->toArray();
+                $offset += $length;
             }
         }
+
         return $chunked;
     }
 
